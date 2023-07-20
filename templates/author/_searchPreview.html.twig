@@ -1,0 +1,33 @@
+<div class="tbody_div">
+    {% for author in authors %}
+        <div class="row_div" id="row_{{ author.id }}">
+            <div class="cell_thead_div_id">{{ author.id }}</div>
+            <div class="cell_thead_div">{{ author.lastname }}</div>
+            <div class="cell_thead_div">{{ author.firstname }}</div>
+
+            <div class="cell_div_oper">
+                <div>
+                    <a href="{{ path('app_author_edit', {'id': author.id}) }}">
+                        <button class="btn btn-sm btn-secondary button_edit">Изменить</button>
+                    </a>
+                </div>
+                <div {{ stimulus_controller('submit-confirm-jq', {
+                    title: "Удалить автора?",
+                    text: author.lastname~' '~author.firstname,
+                    formUrl: path('app_author_delete', {'id': author.id})
+                }) }}>
+                    <button
+                            class="btn btn-sm btn-secondary button_delete"
+                            data-action="submit-confirm-jq#onSubmit">
+                        Удалить
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    {% else %}
+        <div class="row_empty">
+            Записи не найдены
+        </div>
+    {% endfor %}
+</div>

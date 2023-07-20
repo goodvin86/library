@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Книги{% endblock %}
+
+{% block body %}
+    <div {{ stimulus_controller('search-preview', { url: path('app_books') }) }} >
+        <div class="h-content">
+            <div>
+                <form>
+                    <div class="input-group">
+                        <input
+                                name="q"
+                                {# value="{{ searchTerm }}"#}
+                                placeholder="Наименование..."
+                                type="search"
+                                class="form-control"
+                                data-action="search-preview#onSearchInput"
+                        >
+                    </div>
+                </form>
+            </div>
+
+            <div class="caption">
+                Книги
+            </div>
+            <div class="operations">
+                <a href="{{ path('app_newbook') }}">
+                    <button class="button btn btn-sm">Добавить</button>
+                </a>
+            </div>
+        </div>
+
+        <div class="table_div">
+            <div class="thead_div">
+                <div class="row_div">
+                    <div class="cell_thead_div_id">Id</div>
+                    <div class="cell_thead_div">Наименование</div>
+                    <div class="cell_thead_div">Издатель</div>
+                    <div class="cell_thead_div">Год издания</div>
+                    <div class="cell_thead_div">Автор</div>
+                    <div class="cell_thead_div_oper">Операции</div>
+                </div>
+            </div>
+
+            <div
+                    class="search-preview"
+                    data-search-preview-target="rez"
+            >
+
+                <div class="tbody_div">
+                    {% for book in books %}
+                        <div class="row_div" id="row_{{ book.id }}">
+                            <div class="cell_thead_div_id">{{ book.id }}</div>
+                            <div class="cell_thead_div">{{ book.name }}</div>
+                            <div class="cell_thead_div">{{ book.pn }}</div>
+                            <div class="cell_thead_div">{{ book.year }}</div>
+                            <div class="cell_thead_div">{{ book.lastname }}</div>
+                            <div class="cell_div_oper">
+                                <div>
+                                    <a href="{{ path('app_book_edit', {'id': book.id}) }}">
+                                        <button class="btn btn-secondary btn-sm button_edit">Изменить</button>
+                                    </a>
+                                </div>
+                                <div {{ stimulus_controller('submit-confirm-jq', {
+                                    title: "Удалить книгу?",
+                                    text: book.name,
+                                    formUrl: path('app_book_delete', {'id': book.id})
+                                }) }}>
+                                    <button
+                                            class="btn btn-secondary btn-sm button_delete"
+                                            data-action="submit-confirm-jq#onSubmit">
+                                        Удалить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="row_empty">
+                            Записи не найдены
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+<div class="tbody_div">
+    {% for book in books %}
+        <div class="row_div" id="row_{{ book.id }}">
+            <div class="cell_thead_div_id">{{ book.id }}</div>
+            <div class="cell_thead_div">{{ book.name }}</div>
+            <div class="cell_thead_div">{{ book.pn }}</div>
+            <div class="cell_thead_div">{{ book.year }}</div>
+            <div class="cell_thead_div">{{ book.lastname }}</div>
+            <div class="cell_div_oper">
+                <div>
+                    <a href="{{ path('app_book_edit', {'id': book.id}) }}">
+                        <button class="btn btn-secondary btn-sm button_edit">Изменить</button>
+                    </a>
+                </div>
+                <div {{ stimulus_controller('submit-confirm-jq', {
+                    title: "Удалить книгу?",
+                    text: book.name,
+                    formUrl: path('app_book_delete', {'id': book.id})
+                }) }}>
+                    <button
+                            class="btn btn-secondary btn-sm button_delete"
+                            data-action="submit-confirm-jq#onSubmit">
+                        Удалить
+                    </button>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="row_empty">
+            Записи не найдены
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Издатели{% endblock %}
+
+{% block body %}
+<div {{ stimulus_controller('search-preview', { url: path('app_publisher') }) }} >
+    <div class="h-content">
+        <div>
+            <form>
+                <div class="input-group">
+                    <input
+                        name="q"
+                        {# value="{{ searchTerm }}"#}
+                        placeholder="Наименование..."
+                        type="search"
+                        class="form-control"
+                        data-action="search-preview#onSearchInput"
+                    >
+                </div>
+            </form>
+        </div>
+        <div class="caption">
+            Издатели
+        </div>
+        <div class="operations">
+            <a href="{{ path('app_newpublisher') }}">
+                <button class="button btn btn-sm">Добавить</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="table_div">
+        <div class="thead_div">
+            <div class="row_div">
+                <div class="cell_thead_div_id">Id</div>
+                <div class="cell_thead_div">Наименование</div>
+                <div class="cell_thead_div">Адрес</div>
+                <div class="cell_thead_div_oper">Операции</div>
+            </div>
+        </div>
+
+        <div
+            class="search-preview"
+            data-search-preview-target="rez"
+        >
+
+        <div class="tbody_div">
+            {% for publisher in publishers %}
+            <div class="row_div" id="row_{{ publisher.id }}">
+                <div class="cell_thead_div_id">{{ publisher.id }}</div>
+                <div class="cell_thead_div">{{ publisher.name }}</div>
+                <div class="cell_thead_div">{{ publisher.address }}</div>
+                <div class="cell_div_oper">
+                    <div>
+                        <a href="{{ path('app_publisher_edit', {'id': publisher.id}) }}">
+                            <button class="btn btn-secondary btn-sm button_edit">Изменить</button>
+                        </a>
+                    </div>
+                    <div {{ stimulus_controller('submit-confirm-jq', {
+                        title: "Удалить издателя?",
+                        text: publisher.name,
+                        formUrl: path('app_publisher_delete', {'id': publisher.id})
+                    }) }}>
+                        <button
+                                class="btn btn-secondary btn-sm button_delete"
+                                data-action="submit-confirm-jq#onSubmit">
+                            Удалить
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="row_empty">
+                Записи не найдены
+            </div>
+            {% endfor %}
+        </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

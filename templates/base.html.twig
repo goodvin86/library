@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Библиотека{% endblock %}</title>
+        <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
+
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+    <div class="main">
+        <div class="menu">
+            <nav class="sidebar">
+                <div class="text"><a href="{{ path('app_home')}}" class="text logo-text"><img src="{{ asset('images/library-g.png') }}" class="logo-img">Библиотека</a></div>
+                <ul class="main_side">
+                    <li class="{{'app_books'|is_active }}">
+                        <a href="{{ path('app_books')}}" id="1">Книги</a>
+                    </li>
+                    <li class="{{'app_publisher'|is_active }}">
+                        <a href="{{ path('app_publisher')}}" id="2">Издатели</a>
+                    </li>
+                    <li class="{{'app_author'|is_active }}">
+                        <a href="{{ path('app_author')}}" id="3">Авторы</a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+        <div class="content">
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+    {# <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>#}
+    </body>
+</html>

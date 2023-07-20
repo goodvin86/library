@@ -1,0 +1,31 @@
+<div class="tbody_div">
+    {% for publisher in publishers %}
+        <div class="row_div" id="row_{{ publisher.id }}">
+            <div class="cell_thead_div_id">{{ publisher.id }}</div>
+            <div class="cell_thead_div">{{ publisher.name }}</div>
+            <div class="cell_thead_div">{{ publisher.address }}</div>
+            <div class="cell_div_oper">
+                <div>
+                    <a href="{{ path('app_publisher_edit', {'id': publisher.id}) }}">
+                        <button class="btn btn-secondary btn-sm button_edit">Изменить</button>
+                    </a>
+                </div>
+                <div {{ stimulus_controller('submit-confirm-jq', {
+                    title: "Удалить издателя?",
+                    text: publisher.name,
+                    formUrl: path('app_publisher_delete', {'id': publisher.id})
+                }) }}>
+                    <button
+                            class="btn btn-secondary btn-sm button_delete"
+                            data-action="submit-confirm-jq#onSubmit">
+                        Удалить
+                    </button>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="row_empty">
+            Записи не найдены
+        </div>
+    {% endfor %}
+</div>

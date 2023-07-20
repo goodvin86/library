@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Автор{% endblock %}
+
+{% block body %}
+    <div class="h-content h-content-form">
+        <div class="caption">
+            {{ title }}
+        </div>
+    </div>
+    <div class="edit-content">
+        <div class="form">
+            {{ form_start(form) }}
+            <div class="form-row">
+                <div class="input-label-form">Фамилия</div>
+                <div class="input-form"> {{ form_row(form.lastname, {'label': ' '}) }}</div>
+            </div>
+            <div class="form-row">
+                <div class="input-label-form">Имя</div>
+                <div class="input-form"> {{ form_row(form.firstname, {'label': ' '}) }}</div>
+            </div>
+            <div class="form-row-button">
+                <button type="submit" class="btn btn-sm button-save">Сохранить</button>
+                 <a href="{{ path('app_author')}}">
+                    <button type="button" class="btn btn-sm button-cancel">Отмена</button>
+                 </a>
+            {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
